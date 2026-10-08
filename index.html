@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدارس جودة التعليم - المنصة الرقمية</title>
+    <!-- Google Fonts Cairo & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fdf8f4',
+                            100: '#faefe5',
+                            200: '#f3dcce',
+                            300: '#e8be9e',
+                            400: '#dc996b',
+                            500: '#d07b3f',
+                            600: '#b8632e',
+                            700: '#984f27',
+                            800: '#7a4023',
+                            900: '#64371f',
+                            950: '#351b0f',
+                        },
+                        cream: {
+                            50: '#fffcf9',
+                            100: '#fcf6f0',
+                            200: '#f8eedf',
+                            300: '#f2e2cb',
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #fcf6f0 0%, #f3dcce 50%, #faefe5 100%);
+            min-height: 100vh;
+            color: #351b0f;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(243, 220, 206, 0.6);
+            box-shadow: 0 20px 40px -15px rgba(208, 123, 63, 0.15);
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(208,123,63,0.18) 0%, rgba(248,238,223,0) 70%);
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .floating {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fcf6f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e8be9e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d07b3f;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- شريط التنقل العلوي الفخم -->
+    <header class="w-full sticky top-0 z-50 glass-card border-b border-brand-200/50 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- الشعار واسم المؤسسة -->
+            <div class="flex items-center gap-3 group cursor-pointer" onclick="window.location.reload()">
+                <div class="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-400 p-0.5 shadow-md group-hover:scale-105 transition-transform duration-300">
+                    <div class="w-full h-full bg-white rounded-[14px] flex items-center justify-center overflow-hidden">
+                        <img src="https://cdn.phototourl.com/member/2026-10-07-3b8ecff5-1611-4a43-94e9-1787f95bea28.png" alt="شعار مدارس جودة التعليم" class="w-10 h-10 object-contain" onerror="this.src='https://placehold.co/100x100/d07b3f/ffffff?text=BBC'">
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-lg sm:text-xl font-black tracking-tight text-brand-900 group-hover:text-brand-600 transition-colors" data-i18n="brandName">مدارس جودة التعليم</span>
+                    <span class="text-xs text-brand-700/80 font-semibold" data-i18n="brandSub">المنصة الرقمية المتطورة</span>
+                </div>
+            </div>
+
+            <!-- روابط التنقل وأزرار التحكم للشاشات الكبيرة -->
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+                <a href="#" class="text-brand-800 font-bold hover:text-brand-600 transition-colors relative py-1 after:absolute after:bottom-0 after:right-0 after:w-full after:h-0.5 after:bg-brand-600 after:rounded-full" data-i18n="home">الصفحة الرئيسية</a>
+                <a href="#internal-rules" onclick="openModal('rulesModal')" class="text-brand-700 font-semibold hover:text-brand-600 transition-colors" data-i18n="rules">القانون الداخلي للمؤسسة</a>
+                <a href="https://www.bbcschool-dz.com/" target="_blank" class="text-brand-700 font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5" data-i18n="about">
+                    <span>من نحن</span>
+                    <i class="fas fa-external-link-alt text-xs opacity-70"></i>
+                </a>
+
+                <!-- أيقونات التواصل الاجتماعي -->
+                <div class="flex items-center gap-3 border-r border-brand-200 pr-6">
+                    <a href="https://www.instagram.com/bbcschoolalgeria?stkn=Nmczcmk3dzV2NTlq" target="_blank" class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all shadow-sm" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com/@bbcschoolbateau4260?si=SeiuVZDZZFBLIWDC" target="_blank" class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all shadow-sm" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+
+                <!-- اختيار اللغة -->
+                <div class="relative">
+                    <select id="langSwitch" onchange="changeLanguage(this.value)" class="bg-brand-50 border border-brand-200 text-brand-800 text-sm font-bold rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-sm">
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </nav>
+
+            <!-- زر القائمة للجوال -->
+            <div class="flex items-center gap-3 md:hidden">
+                <select id="langSwitchMobile" onchange="changeLanguage(this.value)" class="bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold rounded-lg px-2 py-1.5 outline-none">
+                    <option value="ar">AR</option>
+                    <option value="en">EN</option>
+                </select>
+                <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-xl bg-brand-100 text-brand-800 flex items-center justify-center text-lg focus:outline-none">
+                    <i id="menuIcon" class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- قائمة الجوال المنسدلة -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-b border-brand-200 px-6 py-4 space-y-3 shadow-lg">
+            <a href="#" class="block text-brand-900 font-bold py-2 border-b border-brand-100" data-i18n="home">الصفحة الرئيسية</a>
+            <a href="#" onclick="openModal('rulesModal'); toggleMobileMenu();" class="block text-brand-800 font-semibold py-2 border-b border-brand-100" data-i18n="rules">القانون الداخلي للمؤسسة</a>
+            <a href="https://www.bbcschool-dz.com/" target="_blank" class="block text-brand-800 font-semibold py-2 border-b border-brand-100" data-i18n="about">من نحن</a>
+            <div class="flex items-center gap-4 pt-2">
+                <span class="text-xs text-brand-600 font-bold" data-i18n="socials">تابعنا على:</span>
+                <a href="https://www.instagram.com/bbcschoolalgeria?stkn=Nmczcmk3dzV2NTlq" target="_blank" class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@bbcschoolbateau4260?si=SeiuVZDZZFBLIWDC" target="_blank" class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي (Hero Section) -->
+    <main class="flex-grow relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 flex flex-col items-center justify-center">
+        <!-- عناصر إضاءة خلفية -->
+        <div class="hero-glow top-10 left-1/2 -translate-x-1/2"></div>
+        <div class="hero-glow bottom-0 right-10 opacity-60"></div>
+
+        <!-- مقدمة ترحيبية -->
+        <div class="text-center max-w-3xl mx-auto mb-16 relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-100/80 text-brand-800 font-bold text-xs sm:text-sm mb-6 shadow-sm border border-brand-200/50 floating">
+                <i class="fas fa-sparkles text-brand-600"></i>
+                <span data-i18n="badgeText">مرحباً بكم في بيئتكم التعليمية الذكية</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-black text-brand-950 tracking-tight leading-tight mb-6" data-i18n="mainTitle">
+                «مدارس جودة التعليم»
+            </h1>
+            <p class="text-lg sm:text-xl text-brand-800/80 font-medium max-w-2xl mx-auto leading-relaxed" data-i18n="heroSubtitle">
+                بوابة التعلم الرقمي المتقدمة - نحو تعليم أفضل وأبسط لأبنائنا وبناتنا الطلاب
+            </p>
+        </div>
+
+        <!-- الأقسام الرئيسية الثلاثة -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-5xl mx-auto relative z-10">
+            
+            <!-- بطاقة الابتدائي -->
+            <a href="pages/primary-school.html" class="group relative bg-white/80 hover:bg-white rounded-3xl p-8 border border-brand-200 shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col items-center text-center overflow-hidden hover:-translate-y-2">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-100/50 rounded-full blur-2xl group-hover:bg-amber-200/60 transition-colors"></div>
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-brand-500 text-white flex items-center justify-center text-3xl shadow-lg shadow-brand-500/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3 class="text-2xl font-black text-brand-950 mb-3 group-hover:text-brand-600 transition-colors" data-i18n="primaryBtn">دروسي للابتدائي</h3>
+                <p class="text-sm text-brand-800/70 mb-6 font-medium" data-i18n="primaryDesc">مناهج مبسطة، تمارين تفاعلية، وقصص تعليمية مشوقة للأطفال.</p>
+                <div class="mt-auto inline-flex items-center gap-2 text-brand-600 font-bold text-sm group-hover:gap-3 transition-all">
+                    <span data-i18n="exploreBtn">استكشف القسم</span>
+                    <i class="fas fa-arrow-left text-xs"></i>
+                </div>
+            </a>
+
+            <!-- بطاقة المتوسط -->
+            <a href="pages/middle-school.html" class="group relative bg-white/80 hover:bg-white rounded-3xl p-8 border border-brand-200 shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col items-center text-center overflow-hidden hover:-translate-y-2">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-200/50 rounded-full blur-2xl group-hover:bg-brand-300/60 transition-colors"></div>
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white flex items-center justify-center text-3xl shadow-lg shadow-brand-700/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="text-2xl font-black text-brand-950 mb-3 group-hover:text-brand-600 transition-colors" data-i18n="middleBtn">دروسي للمتوسط</h3>
+                <p class="text-sm text-brand-800/70 mb-6 font-medium" data-i18n="middleDesc">دروس شاملة، ملخصات، وفروض نموذجية لدعم التفوق الدراسي.</p>
+                <div class="mt-auto inline-flex items-center gap-2 text-brand-600 font-bold text-sm group-hover:gap-3 transition-all">
+                    <span data-i18n="exploreBtn">استكشف القسم</span>
+                    <i class="fas fa-arrow-left text-xs"></i>
+                </div>
+            </a>
+
+            <!-- بطاقة فضاء الأساتذة -->
+            <a href="pages/teachers.html" class="group relative bg-white/80 hover:bg-white rounded-3xl p-8 border border-brand-200 shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col items-center text-center overflow-hidden hover:-translate-y-2">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-orange-200/50 rounded-full blur-2xl group-hover:bg-orange-300/60 transition-colors"></div>
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white flex items-center justify-center text-3xl shadow-lg shadow-brand-600/30 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3 class="text-2xl font-black text-brand-950 mb-3 group-hover:text-brand-600 transition-colors" data-i18n="teacherBtn">فضاء الأساتذة</h3>
+                <p class="text-sm text-brand-800/70 mb-6 font-medium" data-i18n="teacherDesc">أدوات تنظيمية، مراجع بيداغوجية، ومنصة تواصل خاصة بالهيئة التعليمية.</p>
+                <div class="mt-auto inline-flex items-center gap-2 text-brand-600 font-bold text-sm group-hover:gap-3 transition-all">
+                    <span data-i18n="exploreBtn">استكشف القسم</span>
+                    <i class="fas fa-arrow-left text-xs"></i>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer class="w-full bg-brand-950 text-cream-200 py-8 border-t border-brand-900 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-brand-800 flex items-center justify-center text-white font-bold text-xs">BBC</div>
+                <p class="text-sm font-semibold" data-i18n="footerText">&copy; 2026 مدارس جودة التعليم. جميع الحقوق محفوظة.</p>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-brand-300">
+                <a href="#" onclick="openModal('rulesModal')" class="hover:text-white transition-colors" data-i18n="rules">القانون الداخلي</a>
+                <a href="https://www.bbcschool-dz.com/" target="_blank" class="hover:text-white transition-colors" data-i18n="about">من نحن</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- نافذة القانون الداخلي (Modal) -->
+    <div id="rulesModal" class="fixed inset-0 z-50 hidden bg-brand-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-brand-200 relative animate-in fade-in zoom-in duration-300">
+            <button onclick="closeModal('rulesModal')" class="absolute top-5 left-5 w-10 h-10 rounded-full bg-brand-100 text-brand-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center text-xl">
+                    <i class="fas fa-book-reader"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-black text-brand-950" data-i18n="rulesModalTitle">القانون الداخلي للمؤسسة</h3>
+                    <p class="text-xs text-brand-600 font-semibold" data-i18n="rulesModalSub">مدارس جودة التعليم - إطار الانضباط والتميز</p>
+                </div>
+            </div>
+            <div class="space-y-4 text-brand-900/80 text-sm leading-relaxed max-h-[60vh] overflow-y-auto pl-2">
+                <p data-i18n="rule1"><strong>1. الحضور والالتزام بالموعد:</strong> يُعتبر الالتزام بأوقات الدخول والخروج ركيزة أساسية لضمان سير العملية التربوية في ظروف مثالية.</p>
+                <p data-i18n="rule2"><strong>2. الهندام المدرسي والأخلاق:</strong> الالتزام بالزي المدرسي المعتمد والتحلي بالأخلاق الرفيعة واحترام الأساتذة والزملاء.</p>
+                <p data-i18n="rule3"><strong>3. العناية بالمرافق:</strong> المحافظة على التجهيزات، الأقسام الرقمية، والساحات لتبقى بيئة صحية وجذابة للتعلم.</p>
+                <p data-i18n="rule4"><strong>4. الجانب العلمي والتحصيل:</strong> المشاركة الفعالة في الأنشطة المدرسية والالتزام بإنجاز الواجبات في أوقاتها المحددة.</p>
+            </div>
+            <div class="mt-8 pt-4 border-t border-brand-100 flex justify-end">
+                <button onclick="closeModal('rulesModal')" class="px-6 py-2.5 rounded-xl bg-brand-600 text-white font-bold hover:bg-brand-700 transition-colors shadow-md" data-i18n="closeBtn">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- جافاسكريبت وتعدد اللغات -->
+    <script>
+        // قاموس اللغات (العربية والإنجليزية)
+        const translations = {
+            ar: {
+                brandName: "مدارس جودة التعليم",
+                brandSub: "المنصة الرقمية المتطورة",
+                home: "الصفحة الرئيسية",
+                rules: "القانون الداخلي للمؤسسة",
+                about: "من نحن",
+                socials: "تابعنا على:",
+                badgeText: "مرحباً بكم في بيئتكم التعليمية الذكية",
+                mainTitle: "«مدارس جودة التعليم»",
+                heroSubtitle: "بوابة التعلم الرقمي المتقدمة - نحو تعليم أفضل وأبسط لأبنائنا وبناتنا الطلاب",
+                primaryBtn: "دروسي للابتدائي",
+                primaryDesc: "مناهج مبسطة، تمارين تفاعلية، وقصص تعليمية مشوقة للأطفال.",
+                middleBtn: "دروسي للمتوسط",
+                middleDesc: "دروس شاملة، ملخصات، وفروض نموذجية لدعم التفوق الدراسي.",
+                teacherBtn: "فضاء الأساتذة",
+                teacherDesc: "أدوات تنظيمية، مراجع بيداغوجية، ومنصة تواصل خاصة بالهيئة التعليمية.",
+                exploreBtn: "استكشف القسم",
+                footerText: "© 2026 مدارس جودة التعليم. جميع الحقوق محفوظة.",
+                rulesModalTitle: "القانون الداخلي للمؤسسة",
+                rulesModalSub: "مدارس جودة التعليم - إطار الانضباط والتميز",
+                rule1: "<strong>1. الحضور والالتزام بالموعد:</strong> يُعتبر الالتزام بأوقات الدخول والخروج ركيزة أساسية لضمان سير العملية التربوية في ظروف مثالية.",
+                rule2: "<strong>2. الهندام المدرسي والأخلاق:</strong> الالتزام بالزي المدرسي المعتمد والتحلي بالأخلاق الرفيعة واحترام الأساتذة والزملاء.",
+                rule3: "<strong>3. العناية بالمرافق:</strong> المحافظة على التجهيزات، الأقسام الرقمية، والساحات لتبقى بيئة صحية وجذابة للتعلم.",
+                rule4: "<strong>4. الجانب العلمي والتحصيل:</strong> المشاركة الفعالة في الأنشطة المدرسية والالتزام بإنجاز الواجبات في أوقاتها المحددة.",
+                closeBtn: "إغلاق"
+            },
+            en: {
+                brandName: "Quality Education Schools",
+                brandSub: "Advanced Digital Platform",
+                home: "Home",
+                rules: "Internal School Rules",
+                about: "About Us",
+                socials: "Follow Us:",
+                badgeText: "Welcome to your smart educational environment",
+                mainTitle: "«Quality Education Schools»",
+                heroSubtitle: "Advanced digital learning portal - Towards a better and simpler education for our students",
+                primaryBtn: "Primary Lessons",
+                primaryDesc: "Simplified curricula, interactive exercises, and engaging educational stories for kids.",
+                middleBtn: "Middle School",
+                middleDesc: "Comprehensive lessons, summaries, and model exams to support academic excellence.",
+                teacherBtn: "Teachers Space",
+                teacherDesc: "Organizational tools, pedagogical references, and a communication platform for teachers.",
+                exploreBtn: "Explore Section",
+                footerText: "© 2026 Quality Education Schools. All rights reserved.",
+                rulesModalTitle: "Internal School Regulations",
+                rulesModalSub: "Quality Education Schools - Framework of Discipline and Excellence",
+                rule1: "<strong>1. Attendance & Punctuality:</strong> Commitment to entry and exit times is essential to ensure a smooth educational process.",
+                rule2: "<strong>2. School Uniform & Ethics:</strong> Adherence to the approved school uniform, high morals, and respect for teachers and peers.",
+                rule3: "<strong>3. Care for Facilities:</strong> Preserving equipment, digital classrooms, and areas to maintain a healthy learning environment.",
+                rule4: "<strong>4. Academic Achievement:</strong> Active participation in school activities and timely completion of assignments.",
+                closeBtn: "Close"
+            }
+        };
+
+        // تبديل اللغة
+        function changeLanguage(lang) {
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', lang);
+            
+            // تحديث قيم عناصر القوائم المنسدلة للغة
+            document.getElementById('langSwitch').value = lang;
+            document.getElementById('langSwitchMobile').value = lang;
+
+            // تغيير النصوص بناءً على المفاتيح
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // حفظ التفضيل في المتصفح
+            localStorage.setItem('bbc_lang', lang);
+        }
+
+        // فتح وإغلاق النوافذ (Modals) بدون استخدام alert
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // قائمة الجوال
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        }
+
+        // إغلاق النافذة عند النقر خارجها
+        window.onclick = function(event) {
+            const modal = document.getElementById('rulesModal');
+            if (event.target === modal) {
+                closeModal('rulesModal');
+            }
+        }
+
+        // تحميل اللغة المحفوظة إن وجدت
+        window.onload = function() {
+            const savedLang = localStorage.getItem('bbc_lang') || 'ar';
+            changeLanguage(savedLang);
+        }
+    </script>
+</body>
+</html>
