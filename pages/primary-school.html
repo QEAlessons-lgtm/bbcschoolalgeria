@@ -8,13 +8,110 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fffaf5;
+            color: #2c3e50;
+            margin: 0;
+            padding: 0;
+        }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; text-align: center; }
         .page-header h1 { color: #d35400; font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; }
-        .primary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .primary-card { background: #fffdf9; border: 3px dashed #e67e22; border-radius: 20px; padding: 30px; text-decoration: none; color: #2c3e50; font-weight: 700; font-size: 1.2rem; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .primary-card:hover { transform: scale(1.03); background: #fdfbf7; border-color: #d35400; }
-        .primary-card i { font-size: 2.5rem; color: #e67e22; margin-bottom: 15px; display: block; }
-        .back-btn { display: inline-block; margin-bottom: 20px; color: #d35400; text-decoration: none; font-weight: 700; float: right; }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #d35400; text-decoration: none; font-weight: 700; float: right; transition: 0.3s; }
+        .back-btn:hover { color: #e67e22; }
+        
+        /* تنسيق أقسام السنوات بتصميم البطاقات المعتمد */
+        .year-section {
+            background: #fffdf9;
+            border: 3px dashed #e67e22;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            text-align: right;
+            transition: 0.3s;
+        }
+        .year-section:hover {
+            border-color: #d35400;
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.15);
+        }
+
+        .year-header {
+            padding: 25px 30px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            background: #fffdf9;
+            transition: background 0.2s;
+        }
+        .year-header:hover {
+            background: #fdfbf7;
+            color: #d35400;
+        }
+        .year-header i.main-icon {
+            font-size: 2rem;
+            color: #e67e22;
+            margin-left: 15px;
+        }
+        .year-header .arrow-icon {
+            color: #e67e22;
+            transition: transform 0.3s ease;
+        }
+        .year-section.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* قائمة المواد المنسدلة */
+        .subjects-list {
+            max-height: 0;
+            overflow: hidden;
+            background: #fdfbf7;
+            border-top: 0px solid #e67e22;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            padding: 0 30px;
+        }
+        .year-section.active .subjects-list {
+            max-height: 1000px;
+            padding: 20px 30px;
+            border-top: 2px dashed #f39c12;
+        }
+
+        .subject-item {
+            margin: 10px 0;
+        }
+        .subject-item a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: #ffffff;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid #fae5d3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .subject-item a:hover {
+            background: #e67e22;
+            color: #ffffff;
+            transform: translateX(-5px);
+            border-color: #e67e22;
+        }
+        .subject-item a i {
+            color: #e67e22;
+            transition: color 0.2s;
+        }
+        .subject-item a:hover i {
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
@@ -25,23 +122,120 @@
             <h1>دروسي للابتدائي</h1>
         </div>
 
-        <div class="primary-grid">
-            <a href="https://drive.google.com/drive/folders/1dyXJBZFbrL1OcumAIQ6U5rvJ6gdzWnqN" target="_blank" class="primary-card">
-                <i class="fas fa-star"></i> السَّنَةُ الأُولَى ابْتِدَائِي (1AP)
-            </a>
-            <a href="https://drive.google.com/drive/folders/1P7V7nhXHfGBTIERgwxrezFHa_S9mZihX" target="_blank" class="primary-card">
-                <i class="fas fa-heart"></i> السَّنَةُ الثَّانِيَةُ ابْتِدَائِي (2AP)
-            </a>
-            <a href="https://drive.google.com/drive/folders/1Ap7QQrZxmjJHNDk6LgIfbaNKqldW3sHX" target="_blank" class="primary-card">
-                <i class="fas fa-smile"></i> السَّنَةُ الثَّالِثَةُ ابْتِدَائِي (3AP)
-            </a>
-            <a href="https://drive.google.com/drive/folders/1swsKUBm_aS8FjD7Rg4eZaR4mQKVudy6q" target="_blank" class="primary-card">
-                <i class="fas fa-sun"></i> السَّنَةُ الرَّابِعَةُ ابْتِدَائِي (4AP)
-            </a>
-            <a href="https://drive.google.com/drive/folders/1RQvlqzcKXRA2ciI94m4og1Xo9T3gHQ7W" target="_blank" class="primary-card">
-                <i class="fas fa-graduation-cap"></i> السَّنَةُ الخَامِسَةُ ابْتِدَائِي (5AP)
-            </a>
+        <!-- السَّنَةُ الأُولَى ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-star main-icon"></i> السَّنَةُ الأُولَى ابْتِدَائِي (1AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1LaGWKjP4aF7n4a7_oNGRu1SOMF6X9CUG" target="_blank"><span>الإِنْجْلِيزِيَّة (رابط 2)</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1PF0aBq5DzK1-NIL12orCO8UFNmB1kkK4" target="_blank"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1NAL8-IFiU9H3AWEH3dDxNqXYthM0O9TY" target="_blank"><span>الرِّيَاضِيَّات</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/10g6g9fPP1ATV1HbX2Ep65B-8XIdSu7AM" target="_blank"><span>اللُّغَة العَرَبِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1tQnyvi5hQELmK9tq0MTEczmVpJk8ZtAt" target="_blank"><span>المَحْفُوظَات</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1ehpJFFss0xn3QHNmP1nch9tZJ3i2q9nC" target="_blank"><span>فَرَنْسِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+            </div>
         </div>
+
+        <!-- السَّنَةُ الثَّانِيَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-heart main-icon"></i> السَّنَةُ الثَّانِيَةُ ابْتِدَائِي (2AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1akgpByV2TyAQv-sX_D3JliSIgQcIQOmE" target="_blank"><span>الإِنْجْلِيزِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1nSV7r9U9wmq8MPHy4KQzlcBisngY1Z4B" target="_blank"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1Lb37IkkgsSbQ4B5E_096tsruqYWySreF" target="_blank"><span>الرِّيَاضِيَّات</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1Q55Ei-cLRegsIM6AB2rv0zhgcBqn5Mle" target="_blank"><span>اللُّغَة العَرَبِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1z7gPIy1WWng3C05m9dcUUyTrGIlQrGB6" target="_blank"><span>المَحْفُوظَات</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1iWQyJrEBSPyGweSWAmtrrZpDIA83-61J" target="_blank"><span>فَرَنْسِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+            </div>
+        </div>
+
+        <!-- السَّنَةُ الثَّالِثَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-smile main-icon"></i> السَّنَةُ الثَّالِثَةُ ابْتِدَائِي (3AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/15oz3oG9Kcopp-78Aag5QMlcd8ONrqALk" target="_blank"><span>الإِنْجْلِيزِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/10nzuVAbojjGRO0CFexbP_4euaua0aHw8" target="_blank"><span>التَّارِيخ</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1E0fypS24pyqqYGT7WWvHM-mP48QcfQN0" target="_blank"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1P7rRiDUgEYU6_k6k9gt-o_J7BuibgGd7" target="_blank"><span>التَّرْبِيَة العِلْمِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1242sDRSjxINwzZErxhl22kX97hEAVw1A" target="_blank"><span>الجُغْرَافِيَا</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1SaALCjPI4FYLJ7S_PF7figs0KoLghZAA" target="_blank"><span>اللُّغَةُ العَرَبِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1J5jqf8PqMOImvCFGVx6ojJuKVJA64wOZ" target="_blank"><span>الوَظَائِف المَنْزِلِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1ka69h-5n91Pw0sYulTo_AcchaSAiN67P" target="_blank"><span>فَرَنْسِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+            </div>
+        </div>
+
+        <!-- السَّنَةُ الرَّابِعَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-sun main-icon"></i> السَّنَةُ الرَّابِعَةُ ابْتِدَائِي (4AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1HaMarSIrmU8NqAuUwbz4ism0781r7ZB5" target="_blank"><span>الإِنْجْلِيزِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1muzW9XSwkVXqaVE9B-vuvQG9PYNOJewV" target="_blank"><span>التَّارِيخ</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1igAdRJDPN8X05DAJ7TLrw4NoqJgpGZ7M" target="_blank"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1iq1oLzzyjwEvI5hozxU_iTNwX-Tya5st" target="_blank"><span>التَّرْبِيَة العِلْمِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1jKngTutL61kF3dZ_fdOibnqenM4aCz1u" target="_blank"><span>التَّرْبِيَة المَدَنِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1yQvGCou0tK857O0Yd9K3oHnqRLdXouvK" target="_blank"><span>الجُغْرَافِيَا</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1d0aNx_y586CBtqCGunLFQwmKWIaGW9SH" target="_blank"><span>الوَظَائِف المَنْزِلِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1XYgyhP-1BVoG8OA_OnDNBGbaNZo5zhuq" target="_blank"><span>فَرَنْسِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+            </div>
+        </div>
+
+        <!-- السَّنَةُ الخَامِسَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-graduation-cap main-icon"></i> السَّنَةُ الخَامِسَةُ ابْتِدَائِي (5AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1Maor8A8Opgu77_0XpH0zUXgChs_GzZQ7" target="_blank"><span>الإِنْجْلِيزِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1NhoAaCupdFhIITRFIR4P6EKV69gkQSuk" target="_blank"><span>التَّارِيخ</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1_2EP1TMyonFNpOoRPRGPHIubdO_uBcLP" target="_blank"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/14AQQeZIaeEcwS_WYTZ3Wjo6rsusCTvtG" target="_blank"><span>التَّرْبِيَة العِلْمِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1PQ1lmtldZUPOXYpKP2PBMeHYyrgMvVtL" target="_blank"><span>التَّرْبِيَة المَدَنِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1GHnzGJx_MMNGI31FVZgXjWDuTf2SzlwB" target="_blank"><span>الجُغْرَافِيَا</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1fD-CVOEqxpSNU5luc7fQT0GrNEcTxk2v" target="_blank"><span>الوَظَائِف المَنْزِلِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+                <div class="subject-item"><a href="https://drive.google.com/drive/folders/1ue-N82Kato3qefKmfIcOpfpbElRMMqzI" target="_blank"><span>فَرَنْسِيَّة</span><i class="fas fa-folder-open"></i></a></div>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        function toggleYear(header) {
+            const section = header.parentElement;
+            const allSections = document.querySelectorAll('.year-section');
+            
+            // إغلاق باقي الأقسام المفتوحة لترتيب الصفحة
+            allSections.forEach(s => {
+                if (s !== section) {
+                    s.classList.remove('active');
+                }
+            });
+            
+            // فتح أو إغلاق القسم الحالي
+            section.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
