@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دروسي للابتدائي - مدارس جودة التعليم</title>
+    <title>دروسي للابتدائي - BBC School</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -15,7 +15,10 @@
             margin: 0;
             padding: 0;
         }
-        .container { max-width: 950px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .container { width: min(950px, calc(100% - 32px)); margin: 40px auto; padding: 0; text-align: center; box-sizing: border-box; }
+        .container * { box-sizing: border-box; }
+        @media (max-width: 600px) { .container { width: calc(100% - 24px); margin: 24px auto; } .page-header h1 { font-size: 2rem; } .year-header { padding: 20px 16px; font-size: 1.05rem; gap: 12px; } .year-header > div { display: flex; align-items: center; gap: 8px; } .year-header i.main-icon { font-size: 1.6rem; margin-left: 4px; flex-shrink: 0; } .subjects-list { padding-left: 14px; padding-right: 14px; } .year-section.active .subjects-list { padding: 14px; } .subject-header { padding: 13px 14px; font-size: 1rem; } .lessons-list { padding-left: 10px; padding-right: 10px; } .subject-item.active .lessons-list { padding: 10px; } .lesson-item a { gap: 10px; font-size: .9rem; } }
+        .year-section, .subject-item { box-sizing: border-box; }
         .page-header h1 { color: #d35400; font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; }
         .back-btn { display: inline-block; margin-bottom: 20px; color: #d35400; text-decoration: none; font-weight: 700; float: right; transition: 0.3s; }
         .back-btn:hover { color: #e67e22; }
@@ -48,6 +51,29 @@
             user-select: none;
             background: #fffdf9;
             transition: background 0.2s;
+            gap: 16px;
+        }
+        /* توسيط الأيقونة والنص عموديًا وأفقيًا داخل بطاقة السنة */
+        .year-header > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+            gap: 8px;
+            line-height: 1.5;
+        }
+        .year-header i.main-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            line-height: 1;
+            margin-left: 8px;
+        }
+        .year-header .arrow-icon {
+            flex-shrink: 0;
         }
         .year-header:hover {
             background: #fdfbf7;
@@ -75,7 +101,7 @@
             padding: 0 30px;
         }
         .year-section.active .subjects-list {
-            max-height: 3500px;
+            max-height: 10000px;
             padding: 20px 30px;
             border-top: 2px dashed #f39c12;
         }
@@ -126,7 +152,7 @@
             padding: 0 20px;
         }
         .subject-item.active .lessons-list {
-            max-height: 1000px;
+            max-height: 5000px;
             padding: 12px 20px;
             border-top: 1px dashed #f39c12;
         }
@@ -231,13 +257,12 @@
                 <div class="subject-item">
                     <div class="subject-header" onclick="toggleSubject(event, this)"><span>اللُّغَة العَرَبِيَّة</span><i class="fas fa-chevron-down"></i></div>
                     <div class="lessons-list">
-                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1y8quEsTk0bVNJPgO1ut7-pZrFl4YdFC8/view?usp=drive_link" target="_blank"><span></span> أحمد في المدرسة</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1y8quEsTk0bVNJPgO1ut7-pZrFl4YdFC8/view?usp=drive_link" target="_blank"><span>أحمد في المدرسة</span><i class="fas fa-book-open"></i></a></div>
                         <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
                    </div>
                 </div>
               </div>
         </div>
-    </div>
 
         <!-- السَّنَةُ الثَّانِيَةُ ابْتِدَائِي -->
         <div class="year-section">
@@ -273,7 +298,7 @@
                 <div class="subject-item">
                     <div class="subject-header" onclick="toggleSubject(event, this)"><span>اللُّغَة العَرَبِيَّة</span><i class="fas fa-chevron-down"></i></div>
                     <div class="lessons-list">
-                        <div class="lesson-item"><a href="" target="_blank"><span></span> أحمد في المدرسة</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="" target="_blank"><span>أحمد في المدرسة</span><i class="fas fa-book-open"></i></a></div>
                         <div class="lesson-item"><a href="https://qealessons-lgtm.github.io/setz/" target="_blank"><span>حرفي ز و س</span><i class="fas fa-book-open"></i></a></div>
                    </div>
                 </div>
@@ -336,7 +361,6 @@
                 </div>
              </div>
             </div>
-        </div>
 
         <!-- السَّنَةُ الرَّابِعَةُ ابْتِدَائِي -->
         <div class="year-section">
