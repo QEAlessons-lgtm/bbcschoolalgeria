@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دروسي للابتدائي - BBC School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fffaf5;
+            color: #2c3e50;
+            margin: 0;
+            padding: 0;
+        }
+        .container { width: min(950px, calc(100% - 32px)); margin: 40px auto; padding: 0; text-align: center; box-sizing: border-box; }
+        .container * { box-sizing: border-box; }
+        @media (max-width: 600px) { .container { width: calc(100% - 24px); margin: 24px auto; } .page-header h1 { font-size: 2rem; } .year-header { padding: 20px 16px; font-size: 1.05rem; gap: 12px; } .year-header > div { display: flex; align-items: center; gap: 8px; } .year-header i.main-icon { font-size: 1.6rem; margin-left: 4px; flex-shrink: 0; } .subjects-list { padding-left: 14px; padding-right: 14px; } .year-section.active .subjects-list { padding: 14px; } .subject-header { padding: 13px 14px; font-size: 1rem; } .lessons-list { padding-left: 10px; padding-right: 10px; } .subject-item.active .lessons-list { padding: 10px; } .lesson-item a { gap: 10px; font-size: .9rem; } }
+        .year-section, .subject-item { box-sizing: border-box; }
+        .page-header h1 { color: #d35400; font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #d35400; text-decoration: none; font-weight: 700; float: right; transition: 0.3s; }
+        .back-btn:hover { color: #e67e22; }
+        
+        /* تنسيق أقسام السنوات */
+        .year-section {
+            background: #fffdf9;
+            border: 3px dashed #e67e22;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            text-align: right;
+            transition: 0.3s;
+        }
+        .year-section:hover {
+            border-color: #d35400;
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.15);
+        }
+
+        .year-header {
+            padding: 25px 30px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            background: #fffdf9;
+            transition: background 0.2s;
+            gap: 16px;
+        }
+        /* توسيط الأيقونة والنص عموديًا وأفقيًا داخل بطاقة السنة */
+        .year-header > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+            gap: 8px;
+            line-height: 1.5;
+        }
+        .year-header i.main-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            line-height: 1;
+            margin-left: 8px;
+        }
+        .year-header .arrow-icon {
+            flex-shrink: 0;
+        }
+        .year-header:hover {
+            background: #fdfbf7;
+            color: #d35400;
+        }
+        .year-header i.main-icon {
+            font-size: 2rem;
+            color: #e67e22;
+            margin-left: 15px;
+        }
+        .year-header .arrow-icon {
+            color: #e67e22;
+            transition: transform 0.3s ease;
+        }
+        .year-section.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* حاوية المواد */
+        .subjects-list {
+            max-height: 0;
+            overflow: hidden;
+            background: #fdfbf7;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            padding: 0 30px;
+        }
+        .year-section.active .subjects-list {
+            max-height: 10000px;
+            padding: 20px 30px;
+            border-top: 2px dashed #f39c12;
+        }
+
+        /* تنسيق قائمة المواد كعناصر منسدلة داخل السنة */
+        .subject-item {
+            margin: 12px 0;
+            border: 1px solid #fae5d3;
+            border-radius: 12px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+        
+        .subject-header {
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2c3e50;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            transition: background 0.2s, color 0.2s;
+        }
+        .subject-header:hover {
+            background: #fff3e0;
+            color: #d35400;
+        }
+        .subject-header i {
+            color: #e67e22;
+            transition: transform 0.3s ease;
+        }
+        .subject-item.active .subject-header {
+            background: #fff3e0;
+            color: #d35400;
+        }
+        .subject-item.active .subject-header i {
+            transform: rotate(180deg);
+        }
+
+        /* قائمة الدروس الفرعية تحت كل مادة */
+        .lessons-list {
+            max-height: 0;
+            overflow: hidden;
+            background: #fffaf5;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 20px;
+        }
+        .subject-item.active .lessons-list {
+            max-height: 5000px;
+            padding: 12px 20px;
+            border-top: 1px dashed #f39c12;
+        }
+
+        .lesson-item {
+            margin: 8px 0;
+        }
+        .lesson-item a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #ffffff;
+            color: #34495e;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid #fdebd0;
+            transition: all 0.2s ease;
+        }
+        .lesson-item a:hover {
+            background: #e67e22;
+            color: #ffffff;
+            transform: translateX(-5px);
+            border-color: #e67e22;
+        }
+        .lesson-item a i {
+            color: #e67e22;
+        }
+        .lesson-item a:hover i {
+            color: #ffffff;
+        }
+
+        /* بطاقة المادة التي تحتوي على رابط مباشر واحد دون تفريع */
+        .single-link-item a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: #ffffff;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid #fae5d3;
+            transition: all 0.2s ease;
+        }
+        .single-link-item a:hover {
+            background: #e67e22;
+            color: #ffffff;
+            transform: translateX(-5px);
+        }
+        .single-link-item a i {
+            color: #e67e22;
+        }
+        .single-link-item a:hover i {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+        <div style="clear: both;"></div>
+        <div class="page-header">
+            <h1>دروسي للابتدائي</h1>
+        </div>
+
+        <!-- السَّنَةُ الأُولَى ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-heart main-icon"></i> السَّنَةُ الأُولَى ابْتِدَائِي (1AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                <!-- التربية الإسلامية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1xvuA6VB69YxrsvynBgUgaLu1PG9x3rrk/view?usp=drivesdk" target="_blank"><span> سورة الفاتحة</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://codeqrcours-blip.github.io/fatiha/" target="_blank"><span>تعلم قراءة سورة الفاتحة</span><i class="fas fa-play-circle"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1y8quEsTk0bVNJPgO1ut7-pZrFl4YdFC8/view?usp=drive_link" target="_blank"><span>الاستئذان</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- الرياضيات -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>الرِّيَاضِيَّات</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://codeqrcours-blip.github.io/math/" target="_blank"><span>الأعداد من 1 إلى 5</span><i class="fas fa-laptop-code"></i></a></div>
+                        <div class="lesson-item"><a href="https://qealessons-lgtm.github.io/Zero/" target="_blank"><span>صفر</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://qealessons-lgtm.github.io/petitequantit-/" target="_blank"><span>عد كميات صغيرة</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- اللغة العربية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>اللُّغَة العَرَبِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1y8quEsTk0bVNJPgO1ut7-pZrFl4YdFC8/view?usp=drive_link" target="_blank"><span>أحمد في المدرسة</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                   </div>
+                </div>
+              </div>
+        </div>
+
+        <!-- السَّنَةُ الثَّانِيَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-heart main-icon"></i> السَّنَةُ الثَّانِيَةُ ابْتِدَائِي (2AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                <!-- التربية الإسلامية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1WJkIuR6FIx5-jyXdLA8M6_47aefVyi13/view?usp=drivesdk" target="_blank"><span>سورة المسد </span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://elmassed.kimi.page/" target="_blank"><span>قراءة سورة المسد</span><i class="fas fa-play-circle"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1xlR8le_VXlGjwj53iackc18upk-5TxCU/view?usp=drive_link" target="_blank"><span>الْإِسْلَامُ يَحُثُّ عَلَى الْعِلْمِ</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1Hk6Fyeu5sX4Utuighq6vv0dniXJoGu7X/view?usp=drive_link" target="_blank"><span>فضل العلم </span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1idVe6NSMreOZm8JUSfrIAE1sNCEbobHJ/view?usp=drive_link" target="_blank"><span>زيارة الأقارب</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- الرياضيات -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>الرِّيَاضِيَّات</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://qealessons-lgtm.github.io/nmbre/" target="_blank"><span>مقارنة الأعداد من 0 إلى 29</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://qealessons-lgtm.github.io/plusmoins/" target="_blank"><span>الجمع والطرح</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://qealessons-lgtm.github.io/Harf1/" target="_blank"><span>أَرْسُمُ عَلَى الْمَرْصُوفَةِ</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- اللغة العربية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>اللُّغَة العَرَبِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="" target="_blank"><span>أحمد في المدرسة</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://qealessons-lgtm.github.io/setz/" target="_blank"><span>حرفي ز و س</span><i class="fas fa-book-open"></i></a></div>
+                   </div>
+                </div>
+            </div>
+        </div>
+        
+                <!-- السَّنَةُ الثَّالِثَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-smile main-icon"></i> السَّنَةُ الثَّالِثَةُ ابْتِدَائِي (3AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                
+                <!-- التاريخ -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّارِيخ</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1VjcHyt44Y9YikVrTxfE5HIcd0_jcXSCj/view?usp=drivesdk" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1zOqH7CXcsaNd_0b9H_4hBOsF1-ult8Qv/view?usp=drive_open" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1Hl1nCi9bwxR9NCIdFhuWXt-1ASH7etLS/view?usp=drive_link" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية الإسلامية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/14vuXL6El9_W-kzcrHJOLMatRY-4ONGb8/view?usp=drivesdk" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1LCXg8aCKS8qIGOuHWvk99SqWsyC5buS1/view?usp=drive_link" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1-jXQmFWngQ48hPgIecpMzjndbtf5clCR/view?usp=drive_link" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية العلمية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة العِلْمِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1iXuhP0wvDSkV27YTHeA1AJjXuierd3j9/view?usp=drivesdk" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1Ey5TVCBnEBSC2Pz_hglxmV9AZpho810y/view?usp=drive_link" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1u17yF9ZJ70P5aqhQv3NjXTFrG9roqThz/view?usp=drive_link" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- اللغة العربية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>اللُّغَةُ العَرَبِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/14JayZE4gd-4j6TBKIrl9XO4yislQ8BYo/view?usp=drivesdk" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1c89qpH3vJJRXT3XhZF7tIDM-joNF2rnR/view?usp=drive_link" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1jvAyyJmSNuezg0e9td4FDx1gpSMj8wzq/view?usp=drive_link" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1h7RcpaVX2hHXg7Ez7q4Cdjy4fs-QM5So/view?usp=drive_link" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- الوظائف المنزلية -->
+                <div class="subject-item single-link-item">
+                    <a href="https://drive.google.com/drive/folders/1J5jqf8PqMOImvCFGVx6ojJuKVJA64wOZ" target="_blank"><span>الوَظَائِف المَنْزِلِيَّة</span><i class="fas fa-folder-open"></i></a>
+                </div>
+             </div>
+            </div>
+
+        <!-- السَّنَةُ الرَّابِعَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-sun main-icon"></i> السَّنَةُ الرَّابِعَةُ ابْتِدَائِي (4AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+              
+                <!-- التاريخ -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّارِيخ</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1-T6ZrpgzizTDZQkyzQ5sBteOl-63V6Oa/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1fjb2sCjKoCZfcyVVjgT1pWa3Cvb7om59/view?usp=drive_link" target="_blank"><span>التاريخ المعلمي الوطني والعالمي </span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية الإسلامية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/18aWX0y9oDAXdFFxE-tPZv2dPW6bDK3eo/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1oCgaFhPFD4-2bLC8xYFcDkTbm_f4ul_c/view?usp=drive_link" target="_blank"><span>الزكاة</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية العلمية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة العِلْمِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1efxiyJ5Wdf1l1SYismsoW6zRlQbM6gq-/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية المدنية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة المَدَنِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1ZR3K-XIB6u4PDHcDnqSgIoGGK0q8SOYy/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- الجغرافيا -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>الجُغْرَافِيَا</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1VSSpYCujAG5bwoZDyV4sgi4OqW3OYJKx/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- الوظائف المنزلية -->
+                <div class="subject-item single-link-item">
+                    <a href="https://drive.google.com/drive/folders/1d0aNx_y586CBtqCGunLFQwmKWIaGW9SH" target="_blank"><span>الوَظَائِف المَنْزِلِيَّة</span><i class="fas fa-folder-open"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- السَّنَةُ الخَامِسَةُ ابْتِدَائِي -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-sun main-icon"></i>  السَّنَةُ الخَامِسَةُ ابْتِدَائِي (5AP)
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+               
+                <!-- التاريخ -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّارِيخ</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1VLWwPkzH4uP5N2ofayMBKHSXnsFwNyb2/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية الإسلامية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة الإِسْلَامِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1Zi9Y9nyFdjTg538KBS2eyGATdUdaJeMP/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1NQMrBjxT4vO4MOIhqSuiqpOdqLrfVw2R/view?usp=drive_link" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية العلمية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة العِلْمِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1B5vHZVZot4CJohoil9eICA0FDS626c3J/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1UpgykLmNjoMe0ctuq9A00dDObYyrv1mL/view?usp=drive_link" target="_blank"><span>فيديو عن الهوا والاحتراق</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1e0KzoZiZY-CeR7BIE6uCS1sHLhVnF3bm/view?usp=drive_link" target="_blank"><span>فيديو عن الغازات الاخرى</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- التربية المدنية -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>التَّرْبِيَة المَدَنِيَّة</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1vqYp1pb6tw7FXrdTynLt649YH6MR3ojq/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1Z9vO3H4cp7hNWLVhUatT0FEdj4yqnTJ5/view?usp=drive_link" target="_blank"><span>فيديو عن المؤسسات العمومية</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1ns11S5M8yHTL-_YN8Ikwqol01ZZ83vAD/view?usp=drive_link" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- الجغرافيا -->
+                <div class="subject-item">
+                    <div class="subject-header" onclick="toggleSubject(event, this)"><span>الجُغْرَافِيَا</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="lessons-list">
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1GSDLC-hrCX136_Vc9p7nScv7c5Giltwz/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
+                        <div class="lesson-item"><a href="https://drive.google.com/file/d/1mc-kkhLWYzb72Nr1_6iQj6q7SNo68Z2p/view?usp=drive_link" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
+                        <div class="lesson-item"><a href="#" target="_blank"><span>الدرس الرابع</span><i class="fas fa-book-open"></i></a></div>
+                    </div>
+                </div>
+                <!-- الوظائف المنزلية -->
+                <div class="subject-item single-link-item">
+                    <a href="https://drive.google.com/drive/folders/1d0aNx_y586CBtqCGunLFQwmKWIaGW9SH" target="_blank"><span>الوَظَائِف المَنْزِلِيَّة</span><i class="fas fa-folder-open"></i></a>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <!-- العربية لغير الناطقين بها -->
+        <div class="year-section">
+            <div class="year-header" onclick="toggleYear(this)">
+                <div>
+                    <i class="fas fa-globe main-icon"></i> العربية لغير الناطقين بها
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="subjects-list">
+                <div class="subject-item single-link-item">
+                    <a href="https://codeqrcours-blip.github.io/arabic/" target="_blank"><span>Let’s learn Arabic</span><i class="fas fa-laptop-code"></i></a>
+                </div>
+                <div class="subject-item single-link-item">
+                    <a href="https://drive.google.com/drive/folders/1bULeWC7FJCReYD5iP-8TmJu2j3UgjmRo" target="_blank"><span>شاهد وتعلم</span><i class="fas fa-video"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // دالة لفتح/إغلاق السنة الدراسية
+        function toggleYear(header) {
+            const section = header.parentElement;
+            const allSections = document.querySelectorAll('.year-section');
+            
+            allSections.forEach(s => {
+                if (s !== section) {
+                    s.classList.remove('active');
+                }
+            });
+            section.classList.toggle('active');
+        }
+
+        // دالة لفتح/إغلاق المادة لعرض الدروس الفرعية
+        function toggleSubject(event, header) {
+            event.stopPropagation();
+            const subjectItem = header.parentElement;
+            const parentList = subjectItem.parentElement;
+            const allSubjects = parentList.querySelectorAll('.subject-item');
+
+            allSubjects.forEach(sub => {
+                if (sub !== subjectItem) {
+                    sub.classList.remove('active');
+                }
+            });
+            subjectItem.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
