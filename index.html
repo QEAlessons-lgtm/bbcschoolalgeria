@@ -89,6 +89,81 @@
             background: #f9caa3;
             border-radius: 3px;
         }
+
+        /* شريط تذكاري خاص بذكرى أول نوفمبر */
+        .november-banner {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(115deg, #17211d 0%, #24362b 48%, #173b2b 100%);
+            color: #fffaf0;
+            border-bottom: 3px solid #d7a64b;
+            box-shadow: 0 10px 24px rgba(20, 35, 27, .16);
+        }
+        .november-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 12% 50%, rgba(214, 166, 75, .20), transparent 28%),
+                linear-gradient(90deg, transparent 0%, rgba(255,255,255,.035) 50%, transparent 100%);
+            pointer-events: none;
+        }
+        .november-banner-inner {
+            position: relative;
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .45rem;
+            text-align: center;
+        }
+        .november-emblem {
+            width: auto;
+            height: auto;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 0;
+            color: #f0c66c;
+            background: transparent;
+            font-size: 1.65rem;
+            line-height: 1;
+            margin: 0 auto .15rem;
+        }
+        .november-title {
+            color: #f5d58a;
+            font-weight: 900;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            line-height: 1.5;
+        }
+        .november-subtitle {
+            color: rgba(255,250,240,.92);
+            font-size: clamp(.75rem, 1.8vw, .9rem);
+            line-height: 1.7;
+        }
+        .november-close {
+            position: absolute;
+            left: .8rem;
+            top: .7rem;
+            width: 2rem;
+            height: 2rem;
+            border: 1px solid rgba(255,255,255,.22);
+            border-radius: 50%;
+            background: rgba(255,255,255,.08);
+            color: #fffaf0;
+            cursor: pointer;
+        }
+        .november-close:hover { background: rgba(255,255,255,.18); }
+        @media (max-width: 480px) {
+            .november-banner-inner { padding: .85rem 2.8rem .85rem .75rem; gap: .45rem; }
+            .november-emblem { font-size: 1.4rem; }
+        }
+
     </style>
 </head>
 <body class="flex flex-col justify-between selection:bg-brand-500 selection:text-white">
@@ -161,6 +236,21 @@
             </div>
         </div>
     </header>
+
+
+    <!-- شريط ذكرى أول نوفمبر: يظهر من 20 أكتوبر إلى 3 نوفمبر -->
+    <section id="novemberBanner" class="november-banner hidden" aria-label="ذكرى أول نوفمبر">
+        <div class="november-banner-inner">
+            <div class="november-emblem" aria-hidden="true"><i class="fas fa-star"></i></div>
+            <div>
+                <div class="november-title" data-i18n="novemberTitle">ذكرى اندلاع الثورة التحريرية المجيدة</div>
+                <div class="november-subtitle" data-i18n="novemberSubtitle">1 نوفمبر 1954 — 1 نوفمبر 2026 · المجد والخلود لشهدائنا الأبرار</div>
+            </div>
+        </div>
+        <button type="button" class="november-close" onclick="dismissNovemberBanner()" aria-label="إغلاق الشريط" title="إغلاق">
+            <i class="fas fa-times"></i>
+        </button>
+    </section>
 
     <!-- القسم الرئيسي (Hero Section) متجاوب مع التابلت والهواتف -->
     <main class="flex-grow relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20 flex flex-col items-center justify-center">
@@ -270,7 +360,9 @@
                 rule2: "<strong>2. الهندام المدرسي والأخلاق:</strong> الالتزام بالزي المدرسي المعتمد والتحلي بالأخلاق الرفيعة واحترام الأساتذة والزملاء.",
                 rule3: "<strong>3. العناية بالمرافق:</strong> المحافظة على التجهيزات، الأقسام الرقمية، والساحات لتبقى بيئة صحية وجذابة للتعلم.",
                 rule4: "<strong>4. الجانب العلمي والتحصيل:</strong> المشاركة الفعالة في الأنشطة المدرسية والالتزام بإنجاز الواجبات في أوقاتها المحددة.",
-                closeBtn: "إغلاق"
+                closeBtn: "إغلاق",
+                novemberTitle: "ذكرى اندلاع الثورة التحريرية المجيدة",
+                novemberSubtitle: "1 نوفمبر 1954 — 1 نوفمبر 2026 · المجد والخلود لشهدائنا الأبرار"
             },
             en: {
                 brandName: "BBC School",
@@ -294,7 +386,9 @@
                 rule2: "<strong>2. School Uniform & Ethics:</strong> Adherence to the approved school uniform, high morals, and respect for teachers and peers.",
                 rule3: "<strong>3. Care for Facilities:</strong> Preserving equipment, digital classrooms, and areas to maintain a healthy learning environment.",
                 rule4: "<strong>4. Academic Achievement:</strong> Active participation in school activities and timely completion of assignments.",
-                closeBtn: "Close"
+                closeBtn: "Close",
+                novemberTitle: "Anniversary of the Glorious Liberation Revolution",
+                novemberSubtitle: "1 November 1954 — 1 November 2026 · Glory and eternity to our righteous martyrs"
             }
         };
 
@@ -302,8 +396,10 @@
             document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
             document.documentElement.setAttribute('lang', lang);
             
-            document.getElementById('langSwitch').value = lang;
-            document.getElementById('langSwitchMobile').value = lang;
+            const desktopLang = document.getElementById('langSwitch');
+            const mobileLang = document.getElementById('langSwitchMobile');
+            if (desktopLang) desktopLang.value = lang;
+            if (mobileLang) mobileLang.value = lang;
 
             const elements = document.querySelectorAll('[data-i18n]');
             elements.forEach(el => {
@@ -314,6 +410,27 @@
             });
 
             localStorage.setItem('bbc_lang', lang);
+        }
+
+        function dismissNovemberBanner() {
+            const banner = document.getElementById('novemberBanner');
+            if (banner) banner.classList.add('hidden');
+            try { sessionStorage.setItem('bbc_november_banner_dismissed', '1'); } catch (e) {}
+        }
+
+        function updateNovemberBanner() {
+            const banner = document.getElementById('novemberBanner');
+            if (!banner) return;
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 9, 20, 0, 0, 0);
+            const end = new Date(now.getFullYear(), 10, 4, 0, 0, 0);
+            let dismissed = false;
+            try { dismissed = sessionStorage.getItem('bbc_november_banner_dismissed') === '1'; } catch (e) {}
+            if (now >= start && now < end && !dismissed) {
+                banner.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+            }
         }
 
         function openModal(modalId) {
@@ -347,6 +464,7 @@
         window.onload = function() {
             const savedLang = localStorage.getItem('bbc_lang') || 'ar';
             changeLanguage(savedLang);
+            updateNovemberBanner();
         }
     </script>
 </body>
