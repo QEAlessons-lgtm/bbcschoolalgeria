@@ -213,6 +213,66 @@
         .single-link-item a:hover i {
             color: #ffffff;
         }
+         /* بطاقة تنبيه مربعة خاصة بجغرافيا السنة الخامسة */
+         .coast-notice-card {
+            position: relative;
+            width: min(360px, 100%);
+            min-height: 320px;
+            margin: 0 auto 16px;
+            padding: 22px 20px 20px;
+            background: #fffdf9;
+            border: 2px solid #e67e22;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(211, 84, 0, 0.12);
+            text-align: right;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .coast-notice-card.hidden {
+            display: none;
+        }
+        .coast-notice-close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: #fdebd0;
+            color: #d35400;
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+        .coast-notice-close:hover {
+            background: #d35400;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+        .coast-notice-title {
+            font-weight: 700;
+            color: #d35400;
+            margin: 0 0 10px;
+            padding-left: 28px;
+            font-size: 1rem;
+        }
+        .coast-notice-card p {
+            margin: 0 0 10px;
+        }
+        .coast-notice-card ul {
+            margin: 0 0 10px;
+            padding-right: 20px;
+        }
+        .coast-notice-card li {
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
@@ -559,6 +619,16 @@
                 <div class="subject-item">
                     <div class="subject-header" onclick="toggleSubject(event, this)"><span>الجُغْرَافِيَا</span><i class="fas fa-chevron-down"></i></div>
                     <div class="lessons-list">
+                        <div class="coast-notice-card" id="coastNotice5AP">
+                            <button type="button" class="coast-notice-close" aria-label="إغلاق البطاقة" onclick="closeCoastNotice(event)">&times;</button>
+                            <div class="coast-notice-title">تنبيه حول طول الشريط الساحلي الجزائري</div>
+                            <p>تم تغيير طول الشريط الساحلي للجزائر بسبب استعمال تقنيات حديثة وأكثر دقة في القياس، حيث كانت القياسات القديمة لا تأخذ بعين الاعتبار جميع تعرّجات الساحل وخلجانه ورؤوسه البحرية.</p>
+                            <ul>
+                                <li>الطول القديم: 1200 كم، ثم 1622 كم.</li>
+                                <li>الطول الجديد المعلن: 2148 كم.</li>
+                            </ul>
+                            <p>إذن، لم يتغير الساحل جغرافيًا، وإنما تحسّنت طرق قياسه، فكُشفت أطوال إضافية لم تكن محسوبة سابقًا.</p>
+                        </div>
                         <div class="lesson-item"><a href="https://drive.google.com/file/d/1GSDLC-hrCX136_Vc9p7nScv7c5Giltwz/view?usp=drive_link" target="_blank"><span>الدرس الأول</span><i class="fas fa-file-pdf"></i></a></div>
                         <div class="lesson-item"><a href="https://drive.google.com/file/d/1mc-kkhLWYzb72Nr1_6iQj6q7SNo68Z2p/view?usp=drive_link" target="_blank"><span>الدرس الثاني</span><i class="fas fa-book-open"></i></a></div>
                         <div class="lesson-item"><a href="https://drive.google.com/file/d/19dxlDL5vxz7DQ9euP4uHl9d4CmnHJLj0/view?usp=drive_link" target="_blank"><span>الدرس الثالث</span><i class="fas fa-book-open"></i></a></div>
@@ -621,6 +691,13 @@
                 }
             });
             subjectItem.classList.toggle('active');
+        }
+        function closeCoastNotice(event) {
+            event.stopPropagation();
+            const card = document.getElementById('coastNotice5AP');
+            if (card) {
+                card.classList.add('hidden');
+            }
         }
     </script>
 </body>
